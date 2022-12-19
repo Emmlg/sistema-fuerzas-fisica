@@ -32,16 +32,14 @@ public void dibujarEjes(){
     g.drawString("X",(w)-12,(h/2)-8);
 }
 //checar
-public void dibujarFuerzas(int x,int y,String fN){
+public void dibujarFuerzas(int x,int y,String fN,String row){
 Graphics2D g=(Graphics2D)p.getGraphics();
 int xdigital=(w/2);
 int ydigital=(h/2);
 //g.fillOval(xdigital,ydigital,x, y);
 g.setColor(Color.blue);
-g.drawString("F "+fN+" N",(xdigital+x)+4 , (ydigital-y)+4);
+g.drawString("F"+row+"="+fN+" N",(xdigital+x)+4 , (ydigital-y)+5);
 g.drawLine(xdigital,ydigital,xdigital+x,ydigital-y);
-
-
 
 }
 public void dibujarResultante(int x,int y,String R){
@@ -50,7 +48,7 @@ int xdigital=(w/2);
 int ydigital=(h/2);
 //g.fillOval(xdigital,ydigital,x, y);
 g.setColor(Color.green);
-g.drawString("R "+R+" °",(xdigital+x)+3, (ydigital-y)+3 );
+g.drawString("R ="+R+" °",(xdigital+x)+3, (ydigital-y)+3 );
 g.drawLine(xdigital,ydigital,xdigital+x,ydigital-y);
 
 

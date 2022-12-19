@@ -29,6 +29,7 @@ public class vistaFuerzas extends javax.swing.JFrame {
         tbsuma.setColumnIdentifiers(header2);
         vistaDato_tb.setModel(tbsuma);
         setBackground(Color.WHITE);
+     
     }
 //atributos
     
@@ -63,15 +64,13 @@ public class vistaFuerzas extends javax.swing.JFrame {
                 double fx=fuerza*Math.cos(Math.toRadians(angulo)),fy=fuerza*Math.sin(Math.toRadians(angulo));
                tbsuma.setValueAt(fx, row,1);
                tbsuma.setValueAt(fy, row,2);
-               fuerzaResultante();
-                prueba();
-               graficar();
-
+              fuerzaResultante();///////////////////////////////
+              //graficarfuerzas(fuerza, angulo);
+              prueba();
+              graficar();
             }
  
             }
-
-
 
        };
 
@@ -107,15 +106,24 @@ public class vistaFuerzas extends javax.swing.JFrame {
      });
     
     }
+    
     public void agregaFxFy(double fuerza,double angulo){
     double fx=fuerza*Math.cos(Math.toRadians(angulo)),fy=fuerza*Math.sin(Math.toRadians(angulo));
   
      tbsuma.addRow(new Object[]{
      "fuerza "+(tbsuma.getRowCount()+1),fx,fy
      });
-
+  //checar opcion  
+  /*
+   VistaGrafica p=new VistaGrafica(grafica_jpa);
+  int fx1=(int)fx;
+  int fy1=(int)fy;
+  p.dibujarFuerzas(fx1, fy1);
+  */
+//  graficarfuerzas();
 
     }
+    
 public void graficarfuerzas(double fuerza,double angulo){
     
  double fx=fuerza*Math.cos(Math.toRadians(angulo)),fy=fuerza*Math.sin(Math.toRadians(angulo));
@@ -155,24 +163,25 @@ anguloresultante=360+((Math.atan(aux))*(180/Math.PI));
 } 
  angulos_lb.setText(""+anguloresultante+" °");
      
-  }      
+  }   
   
    public void vaciar(){
    fuerza_txf.setText("");
    angulo_txf.setText("");
    } 
-   
+   /////////////////////////////////////////
  public void graficar(){
-     
   VistaGrafica p=new VistaGrafica(grafica_jpa);
    p.dibujarEjes();
-   
  }
+ 
  public int sumatoriax(){
    double fx = 0;
+           //fy = 0,resultante=0,anguloresultante = 0;
   
      for(int i=0;i<tbsuma.getRowCount();i++){
      fx+=Double.parseDouble(tbsuma.getValueAt(i,1).toString());
+
      }
      //resultante
     // resultante=Math.sqrt( (Math.pow(fx,2))+(Math.pow(fy,2)) );
@@ -195,61 +204,57 @@ public double resultante(){
   
      for(int i=0;i<tbsuma.getRowCount();i++){
      fx+=Double.parseDouble(tbsuma.getValueAt(i,1).toString());
-     fy+=Double.parseDouble(tbsuma.getValueAt(i,2).toString()); 
+     fy+=Double.parseDouble(tbsuma.getValueAt(i,2).toString());
+     
      }
     
-  resultante=Math.sqrt( (Math.pow(fx,2))+(Math.pow(fy,2)) );
+     resultante=Math.sqrt( (Math.pow(fx,2))+(Math.pow(fy,2)) );
 return resultante;
 }
-
+/////////////////////////////////////////////
 public void prueba(){
-    
+
     int w=grafica_jpa.getWidth();
     int h=grafica_jpa.getHeight();
     VistaGrafica p=new VistaGrafica(grafica_jpa);
     Graphics2D g=(Graphics2D)grafica_jpa.getGraphics();
    
     g.clearRect(0, 0, w, h);
-   
+    
     for (int i = 0; i <vistaDato_tb.getRowCount(); i++) {
      double fx=Double.parseDouble(vistaDato_tb.getValueAt(i,1).toString());
      double fy=Double.parseDouble(vistaDato_tb.getValueAt(i,2).toString());  
      String fN=(datosEntrada_tb.getValueAt(i,1).toString());
+     String row=""+(i+1);
      int fx1=(int)fx;
      int fy1=(int)fy;
    //  int fn=(int)fN;
-     p.dibujarFuerzas(fx1,fy1,fN);
+     p.dibujarFuerzas(fx1,fy1,fN,row);
      
     }
-pruebaresul();
+    pruebaresul();
 
 }
 
-
 public void trash(){
-//reiniciar txf
+    //reiniciar txf
 vaciar();
-
 //eliminar tabla entrada
  int fila=datosEntrada_tb.getRowCount();
  for(int i=0;i<fila;i++){
  tbEntrada.removeRow(0);
  }
- 
  //eliminar tabla sumas
  int fila1=vistaDato_tb.getRowCount();
  for(int i=0;i<fila1;i++){
  tbsuma.removeRow(0);
  }
- 
 //eliminar lb
 Fuerza_lb.setText("");
 angulos_lb.setText("");
-
 //reiniciar panel
-grafica_jpa.repaint();
+grafica_jpa.repaint();////////////////////////////////////////////////////
 }
-
 public void pruebaresul(){
 
  VistaGrafica p=new VistaGrafica(grafica_jpa);
@@ -260,6 +265,7 @@ public void pruebaresul(){
     String r=""+resultante();
     
     p.dibujarResultante(sumax,sumay,r);
+     
 }
 }
     @SuppressWarnings("unchecked")
@@ -285,11 +291,11 @@ public void pruebaresul(){
         jLabel5 = new javax.swing.JLabel();
         angulos_lb = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         grafica_jpa = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -422,6 +428,9 @@ public void pruebaresul(){
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("N");
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel6.setText("°");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -429,18 +438,22 @@ public void pruebaresul(){
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(angulos_lb, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(Fuerza_lb, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4))
-                    .addComponent(jLabel5))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                            .addComponent(angulos_lb, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6))
+                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -450,7 +463,9 @@ public void pruebaresul(){
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(angulos_lb, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(angulos_lb, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(jLabel6))
                 .addContainerGap())
         );
 
@@ -476,14 +491,6 @@ public void pruebaresul(){
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/comihacks (3).jpeg"))); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setText("Graficar Resultante");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButton2.setText("Reiniciar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -497,27 +504,19 @@ public void pruebaresul(){
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(54, 54, 54)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(341, 341, 341)
                         .addComponent(jLabel9)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(106, 106, 106))
+                            .addComponent(jLabel7)
                             .addComponent(jLabel8))
                         .addGap(28, 28, 28))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -538,9 +537,7 @@ public void pruebaresul(){
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2)))
+                        .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(grafica_jpa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
@@ -566,14 +563,19 @@ boolean fu,an;
     an=verificadorDatos(anguloE);
     double angi=Double.parseDouble(anguloE);
     //envio de datos
-    if(fu && an==true&&angi<360){
+    if(fu && an==true && angi<360){
      error_lb.setText(". . .");
-    vaciar();
+     vaciar();
+     /*
+    VistaGrafica p=new VistaGrafica(grafica_jpa);
+    p.dibujarEjes();*/
+    //p.dibujarFuerzas(WIDTH, WIDTH);
     graficar();
     
     Double fuerza=Double.parseDouble(fuerzaE),ang=Double.parseDouble(anguloE);
     agregarEntrada(fuerza,ang);
     agregaFxFy(fuerza,ang);
+    
     prueba();
     fuerzaResultante();
     
@@ -601,15 +603,10 @@ enter_btt.doClick();
 }
     }//GEN-LAST:event_fuerza_txfKeyTyped
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        pruebaresul();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         trash();
 
-       
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -656,13 +653,13 @@ enter_btt.doClick();
     private javax.swing.JLabel error_lb;
     private javax.swing.JTextField fuerza_txf;
     private javax.swing.JPanel grafica_jpa;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
