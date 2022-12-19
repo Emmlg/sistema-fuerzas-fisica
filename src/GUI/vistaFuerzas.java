@@ -1,4 +1,4 @@
-package logica;
+package GUI;
 
 import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import static javax.swing.SwingConstants.CENTER;
 import javax.swing.table.DefaultTableModel;
+import logica.VistaGrafica;
 import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 /**
