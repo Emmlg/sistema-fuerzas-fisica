@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logica;
+package GUI;
 
 import logica.VistaGrafica;
 import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import javax.swing.table.DefaultTableModel;
+import logica.VistaGrafica;
 
 /**
  *
